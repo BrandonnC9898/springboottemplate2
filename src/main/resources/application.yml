@@ -1,0 +1,6 @@
+spring:
+  port: 8081
+  application:
+    name: springboottemplate2
+  profiles:
+    active: ${PROFILE}
