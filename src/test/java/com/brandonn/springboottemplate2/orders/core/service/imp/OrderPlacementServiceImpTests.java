@@ -1,8 +1,10 @@
 package com.brandonn.springboottemplate2.orders.core.service.imp;
 
 import com.brandonn.springboottemplate2.orders.core.dto.CreateOrderPlacementRequestDto;
+import com.brandonn.springboottemplate2.products.core.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,11 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderPlacementServiceImpTests {
 
+    private final ProductService productService = Mockito.mock(ProductService.class);
+
     private OrderPlacementServiceImp service;
 
     @BeforeEach
     public void init() {
-        service = new OrderPlacementServiceImp();
+        service = new OrderPlacementServiceImp(productService);
     }
 
     @Test
