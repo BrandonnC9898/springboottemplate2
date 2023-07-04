@@ -67,7 +67,7 @@ public class InventoryServiceImpTests {
         // Mock
         List<InventoryEntity> inventoryRows = new ArrayList<>();
         inventoryRows.add(inventoryEntities.get(0));
-        when(repository.findAllByProductId(request.keySet())).thenReturn(inventoryRows);
+        when(repository.findAllByInventoryPk_ProductIdIn(request.keySet())).thenReturn(inventoryRows);
         List<InventoryEntity> updatedRows = new ArrayList<>();
         updatedRows.add(updatedEntities.get(0));
         when(repository.saveAll(updatedRows)).thenReturn(updatedRows);
@@ -82,7 +82,7 @@ public class InventoryServiceImpTests {
         // Mock
         List<InventoryEntity> inventoryRows = new ArrayList<>();
         inventoryRows.add(inventoryEntities.get(0));
-        when(repository.findAllByProductId(request.keySet())).thenReturn(inventoryRows);
+        when(repository.findAllByInventoryPk_ProductIdIn(request.keySet())).thenReturn(inventoryRows);
         List<InventoryEntity> updatedRows = new ArrayList<>();
         updatedRows.add(updatedEntities.get(0));
         when(repository.saveAll(updatedRows)).thenReturn(updatedRows);
