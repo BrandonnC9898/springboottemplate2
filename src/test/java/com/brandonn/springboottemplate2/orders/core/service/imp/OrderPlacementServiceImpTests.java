@@ -1,6 +1,7 @@
 package com.brandonn.springboottemplate2.orders.core.service.imp;
 
 import com.brandonn.springboottemplate2.orders.core.dto.CreateOrderPlacementRequestDto;
+import com.brandonn.springboottemplate2.products.core.service.InventoryService;
 import com.brandonn.springboottemplate2.products.core.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,11 +16,13 @@ public class OrderPlacementServiceImpTests {
 
     private final ProductService productService = Mockito.mock(ProductService.class);
 
+    private final InventoryService inventoryService = Mockito.mock(InventoryService.class);
+
     private OrderPlacementServiceImp service;
 
     @BeforeEach
     public void init() {
-        service = new OrderPlacementServiceImp(productService);
+        service = new OrderPlacementServiceImp(productService, inventoryService);
     }
 
     @Test

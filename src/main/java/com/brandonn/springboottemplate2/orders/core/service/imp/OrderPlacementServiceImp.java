@@ -3,6 +3,7 @@ package com.brandonn.springboottemplate2.orders.core.service.imp;
 import com.brandonn.springboottemplate2.orders.core.bo.OrderBo;
 import com.brandonn.springboottemplate2.orders.core.dto.CreateOrderPlacementRequestDto;
 import com.brandonn.springboottemplate2.orders.core.service.OrderPlacementService;
+import com.brandonn.springboottemplate2.products.core.service.InventoryService;
 import com.brandonn.springboottemplate2.products.core.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,11 @@ public class OrderPlacementServiceImp implements OrderPlacementService {
 
     private final ProductService productService;
 
-    public OrderPlacementServiceImp(ProductService productService) {
+    private final InventoryService inventoryService;
+
+    public OrderPlacementServiceImp(ProductService productService, InventoryService inventoryService) {
         this.productService = productService;
+        this.inventoryService = inventoryService;
     }
 
     @Override
@@ -34,6 +38,7 @@ public class OrderPlacementServiceImp implements OrderPlacementService {
         request.getItems().forEach(p -> productItems.put(p.getProductId(), p.getQuantity()));
         BigDecimal total = productService.calculateTotalPrice(productItems);
         // TO-DO: remove the money from the customer
+        inventoryService.subtract(productItems);
         return null;
     }
 }
