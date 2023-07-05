@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderPlacementController {
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid CreateOrderPlacementRequestDto request) {
+    public ResponseEntity<?> create(@Valid @RequestBody CreateOrderPlacementRequestDto request) {
         log.info("create request: {}", request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
