@@ -4,3 +4,8 @@ spring:
     name: springboottemplate2
   profiles:
     active: ${PROFILE}
+
+info:
+  app:
+    version: ${project.version}
+    name: ${project.name}
