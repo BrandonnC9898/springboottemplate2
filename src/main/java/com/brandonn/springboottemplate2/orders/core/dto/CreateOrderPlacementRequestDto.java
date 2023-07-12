@@ -1,6 +1,7 @@
 package com.brandonn.springboottemplate2.orders.core.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateOrderPlacementRequestDto {
     @NotNull
+    @PositiveOrZero
     private Long customerId;
 
     @NotNull
