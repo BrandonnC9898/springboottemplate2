@@ -37,6 +37,7 @@ public class OrderPlacementServiceImp implements OrderPlacementService {
         Map<Long, Integer> productItems = new HashMap<>();
         request.getItems().forEach(p -> productItems.put(p.getProductId(), p.getQuantity()));
         BigDecimal total = productService.calculateTotalPrice(productItems);
+        log.info("Total price: {}", total);
         // TO-DO: remove the money from the customer
         inventoryService.subtract(productItems);
         return null;

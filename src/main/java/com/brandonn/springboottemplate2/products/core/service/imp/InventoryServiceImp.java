@@ -25,7 +25,7 @@ public class InventoryServiceImp implements InventoryService {
     @Override
     public boolean subtract(Map<Long, Integer> products) {
         var inventoryRows = repository.findAllByInventoryPk_ProductIdIn(products.keySet());
-        if (inventoryRows.size() != products.keySet().size()) {
+        if (inventoryRows.size() < products.keySet().size()) {
             return false;
         }
         List<InventoryEntity> updatedRows = new ArrayList<>();
