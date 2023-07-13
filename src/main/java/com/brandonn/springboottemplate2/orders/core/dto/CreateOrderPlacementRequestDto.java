@@ -1,11 +1,13 @@
 package com.brandonn.springboottemplate2.orders.core.dto;
 
+import com.brandonn.springboottemplate2.shared.annotation.ValidDateFormat;
+import com.brandonn.springboottemplate2.shared.utils.DateUtils;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,7 +21,12 @@ public class CreateOrderPlacementRequestDto {
     private Long salesmanId;
 
     @NotNull
-    private Date orderDate;
+    @ValidDateFormat
+    private String orderDate;
 
     private List<OrderItemRequestDto> items;
+
+    public LocalDate getOrderDateAsLocalDate() {
+        return DateUtils.parseDate(this.orderDate);
+    }
 }
