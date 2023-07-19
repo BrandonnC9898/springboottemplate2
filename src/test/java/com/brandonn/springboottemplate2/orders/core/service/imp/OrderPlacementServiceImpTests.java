@@ -1,17 +1,16 @@
 package com.brandonn.springboottemplate2.orders.core.service.imp;
 
 import com.brandonn.springboottemplate2.orders.core.dto.CreateOrderPlacementRequestDto;
+import com.brandonn.springboottemplate2.orders.integration.database.OrderRepository;
 import com.brandonn.springboottemplate2.products.core.service.InventoryService;
 import com.brandonn.springboottemplate2.products.core.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OrderPlacementServiceImpTests {
 
@@ -19,11 +18,13 @@ public class OrderPlacementServiceImpTests {
 
     private final InventoryService inventoryService = Mockito.mock(InventoryService.class);
 
+    private final OrderRepository orderRepository = Mockito.mock(OrderRepository.class);
+
     private OrderPlacementServiceImp service;
 
     @BeforeEach
     public void init() {
-        service = new OrderPlacementServiceImp(productService, inventoryService);
+        service = new OrderPlacementServiceImp(productService, inventoryService, orderRepository);
     }
 
     //@Test

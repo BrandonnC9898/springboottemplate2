@@ -3,6 +3,7 @@ package com.brandonn.springboottemplate2.products.integration.database.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "PRODUCTS", schema = "OT")
@@ -29,5 +30,18 @@ public class ProductEntity {
 
     public void setListPrice(BigDecimal listPrice) {
         this.listPrice = listPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductEntity product = (ProductEntity) o;
+        return Objects.equals(productId, product.productId) && Objects.equals(listPrice, product.listPrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId, listPrice);
     }
 }
