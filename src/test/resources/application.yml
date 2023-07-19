@@ -1,0 +1,11 @@
+spring:
+  port: 8081
+  application:
+    name: springboottemplate2
+  profiles:
+    active: test
+
+info:
+  app:
+    version: 0.0.1
+    name: springboottemplate2

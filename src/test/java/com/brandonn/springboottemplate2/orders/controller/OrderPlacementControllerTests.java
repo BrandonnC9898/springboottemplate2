@@ -43,4 +43,35 @@ public class OrderPlacementControllerTests {
         requestBody.setItems(items);
         mockMvc.perform(post("/order/placement").contentType("application/json").content(objectMapper.writeValueAsString(requestBody))).andExpect(status().isCreated());
     }
+
+    @Test
+    public void create_InvalidCustomerId_ReturnsBadRequest() throws Exception {
+        var requestBody = new CreateOrderPlacementRequestDto();
+        var item = new OrderItemRequestDto();
+        item.setProductId(2L);
+        item.setQuantity(2);
+        var items = new ArrayList<OrderItemRequestDto>();
+        items.add(item);
+        requestBody.setCustomerId(null);
+        requestBody.setSalesmanId(1L);
+        requestBody.setOrderDate("26-06-2023");
+        requestBody.setItems(items);
+        mockMvc.perform(post("/order/placement").contentType("application/json").content(objectMapper.writeValueAsString(requestBody))).andExpect(status().isBadRequest());
+    }
+
+    // TO-DO: add validation of date
+    //@Test
+    public void create_ShouldReturnBadRequestForInvalidDate() throws Exception {
+        var requestBody = new CreateOrderPlacementRequestDto();
+        var item = new OrderItemRequestDto();
+        item.setProductId(2L);
+        item.setQuantity(2);
+        var items = new ArrayList<OrderItemRequestDto>();
+        items.add(item);
+        requestBody.setCustomerId(1L);
+        requestBody.setSalesmanId(1L);
+        requestBody.setOrderDate("300-06-2023");
+        requestBody.setItems(items);
+        mockMvc.perform(post("/order/placement").contentType("application/json").content(objectMapper.writeValueAsString(requestBody))).andExpect(status().isBadRequest());
+    }
 }
