@@ -1,6 +1,0 @@
-Execute sonarqube
-./gradlew sonar \
-  -Dsonar.projectKey=springboottemplate2 \
-  -Dsonar.projectName='springboottemplate2' \
-  -Dsonar.host.url=http://localhost:9000 \
-  -Dsonar.token=<token>
