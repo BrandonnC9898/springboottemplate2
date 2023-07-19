@@ -31,7 +31,7 @@ public class OrderPlacementServiceImpTests {
         CreateOrderPlacementRequestDto request = new CreateOrderPlacementRequestDto();
         request.setCustomerId(1L);
         request.setSalesmanId(1L);
-        request.setOrderDate(new Date());
+        request.setOrderDate(new Date().toString());
         request.setItems(new ArrayList<>());
         assertNotNull(service.create(request));
     }
