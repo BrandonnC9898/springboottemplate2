@@ -1,9 +1,11 @@
 package com.brandonn.springboottemplate2.orders.controller;
 
+import com.brandonn.springboottemplate2.orders.core.bo.OrderBo;
 import com.brandonn.springboottemplate2.orders.core.dto.CreateOrderPlacementRequestDto;
 import com.brandonn.springboottemplate2.orders.core.dto.OrderItemRequestDto;
 import com.brandonn.springboottemplate2.orders.core.service.OrderPlacementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,7 +48,23 @@ public class OrderPlacementControllerTests {
         requestBody.setSalesmanId(1L);
         requestBody.setOrderDate("26-06-2023");
         requestBody.setItems(items);
-        mockMvc.perform(post("/order/placement").contentType("application/json").content(objectMapper.writeValueAsString(requestBody))).andExpect(status().isCreated());
+        mockMvc.perform(post("/order/placement")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(requestBody)))
+                .andExpect(status().isCreated());
+        OrderBo expected = new OrderBo();
+        expected.setOrderId(126L);
+        expected.setCustomerId(1L);
+        expected.setStatus("Pending");
+        expected.setSalesmanId(1L);
+        expected.setOrderDate(LocalDate.parse("2023-06-06", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        when(service.create(requestBody)).thenReturn(expected);
+        MvcResult result = mockMvc.perform(post("/order/placement")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(requestBody)))
+                .andExpect(status().isCreated()).andReturn();
+        var resultStr = result.getResponse().getContentAsString();
+        assertEquals(objectMapper.writeValueAsString(resultStr), JSONObject.quote(resultStr));
     }
 
     @Test
@@ -56,7 +79,10 @@ public class OrderPlacementControllerTests {
         requestBody.setSalesmanId(1L);
         requestBody.setOrderDate("26-06-2023");
         requestBody.setItems(items);
-        mockMvc.perform(post("/order/placement").contentType("application/json").content(objectMapper.writeValueAsString(requestBody))).andExpect(status().isBadRequest());
+        mockMvc.perform(post("/order/placement")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(requestBody)))
+                .andExpect(status().isBadRequest());
     }
 
     // TO-DO: add validation of date
@@ -72,6 +98,9 @@ public class OrderPlacementControllerTests {
         requestBody.setSalesmanId(1L);
         requestBody.setOrderDate("300-06-2023");
         requestBody.setItems(items);
-        mockMvc.perform(post("/order/placement").contentType("application/json").content(objectMapper.writeValueAsString(requestBody))).andExpect(status().isBadRequest());
+        mockMvc.perform(post("/order/placement")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(requestBody)))
+                .andExpect(status().isBadRequest());
     }
 }
